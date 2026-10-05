@@ -48,7 +48,7 @@ const hamster = (kind, cls = '', eager = false) => {
 
 const sectionHead = (tag, kicker, title, lead = '') => `
 <div class="section-head reveal">
-  <p class="kicker"><span class="tag">${tag}</span>${kicker}</p>
+  ${tag || kicker ? `<p class="kicker">${tag ? `<span class="tag">${tag}</span>` : ''}${kicker}</p>` : ''}
   <h2>${phrases(title)}</h2>
   ${lead ? `<p class="lead">${lead}</p>` : ''}
 </div>`;
@@ -100,11 +100,11 @@ function about() {
 <section id="about" class="section">
   ${space('galaxy', 'cz-about')}
   <div class="wrap">
-    ${sectionHead('STAGE 01', 'Super GameDev Camp', 'ค่ายนี้คืออะไร', e(c.about.body))}
+    ${sectionHead('', '', 'ค่ายนี้คืออะไร', e(c.about.body))}
     <ol class="stages">
       ${c.about.stages.map((s, i) => `
       <li class="stage reveal" style="--c:${look[i % 3][0]};--d:${i * 0.14}s">
-        <span class="stage-orb" aria-hidden="true"><i class="stage-ring"></i>${hamster(STAGE_HAM[i % 3], 'stage-ham')}<b class="stage-n">0${i + 1}</b></span>
+        <span class="stage-orb" aria-hidden="true"><i class="stage-ring"></i>${hamster(STAGE_HAM[i % 3], 'stage-ham')}</span>
         <h3>${e(s.title)}</h3>
         <p>${e(s.text)}</p>
       </li>`).join('')}
@@ -130,12 +130,11 @@ function build() {
   return `
 <section id="build" class="section build">
   <div class="wrap">
-    ${sectionHead('STAGE 02', '3 ระบบในเกมเดียว', 'สิ่งที่จะได้ทำ', 'ทั้งสามส่วนคือชิ้นส่วนของเส้นทางเรียนรู้เดียวกัน ทุกคนได้ทำครบ ไม่ต้องเลือกสายใดสายหนึ่ง')}
+    ${sectionHead('', '', 'สิ่งที่จะได้ทำ', 'ทั้งสามส่วนคือชิ้นส่วนของเส้นทางเรียนรู้เดียวกัน ทุกคนได้ทำครบ ไม่ต้องเลือกสายใดสายหนึ่ง')}
     <div class="trio" role="list">
       ${sys.map((s, i) => `
       <button class="trio-item reveal" role="listitem" type="button" data-sys="${i}" style="--c:${SYSTEM_C[s.id]};--d:${i * 0.12}s" aria-label="ดูระบบ ${e(s.title)}">
         ${model(s, 'mdl-sm')}
-        <span class="trio-tag">SYSTEM 0${i + 1}</span>
         <span class="trio-name">${e(s.title)}</span>
         <span class="trio-more">กดเพื่อดู →</span>
       </button>`).join('')}
@@ -146,7 +145,6 @@ function build() {
       <article class="spot-slide" data-slide="${i}" style="--c:${SYSTEM_C[s.id]}" hidden>
         <p class="spot-word" aria-hidden="true">${e(s.word || '')}</p>
         <div class="spot-copy">
-          <p class="spot-tag">SYSTEM 0${i + 1}</p>
           <h3>${e(s.title)}</h3>
           <p class="spot-text">${e(s.text)}</p>
           ${s.tagline ? `<p class="spot-quote">“${e(s.tagline)}”</p>` : ''}
@@ -395,7 +393,7 @@ function joinSection() {
       <div class="launch-sky" aria-hidden="true"><i class="launch-planet"></i><i class="launch-ring"></i></div>
       <div class="launch-copy">
         <p class="kicker"><span class="tag">READY?</span>สมัครเข้าค่าย</p>
-        <h2><span class="nowrap">พร้อมออกเดินทาง</span><wbr><span class="nowrap">หรือยัง</span></h2>
+        <h2><span class="nowrap">พร้อมได้ผลงานจริง</span><wbr><span class="nowrap">กันรึยัง</span></h2>
         <p class="launch-price"><strong>${c.price.amount.toLocaleString('th-TH')}</strong><span>${e(c.price.currency)}${c.price.unit ? ` ${e(c.price.unit)}` : ''}<small>ค่าสมัครตลอด 4 วัน${c.price.includes.length ? ` · รวม ${e(c.price.includes.join(', '))}` : ''}</small></span></p>
         <ul class="launch-meta">
           ${meta('calendar', 'วันที่', dateText())}
