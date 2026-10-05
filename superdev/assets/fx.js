@@ -13,11 +13,13 @@ export function initFx() {
   let pending = [...document.querySelectorAll('.reveal')];
   const reveal = vh => {
     if (!pending.length) return;
+    const shown = [];
     pending = pending.filter(el => {
       if (el.getBoundingClientRect().top > vh * 0.94) return true; // ยังอยู่ใต้จอ
-      el.classList.add('in'); // อยู่ในจอ หรือถูกเลื่อนผ่านไปแล้ว (เช่น กระโดดด้วยลิงก์เมนู)
+      shown.push(el); // อยู่ในจอ หรือถูกเลื่อนผ่านไปแล้ว (เช่น กระโดดด้วยลิงก์เมนู)
       return false;
     });
+    for (const el of shown) el.classList.add('in'); // เขียนทีหลังอ่านครบ
   };
   if (reduced) {
     pending.forEach(el => el.classList.add('in'));
@@ -28,20 +30,17 @@ export function initFx() {
   let queued = false;
   const onScroll = () => {
     queued = false;
+    // อ่านตำแหน่งทั้งหมดก่อน แล้วค่อยเขียน — ไม่บังคับให้เบราว์เซอร์คำนวณ layout ซ้ำกลางเฟรม (ลื่นขึ้นมากบน iOS)
     const y = scrollY, vh = innerHeight;
-    header?.classList.toggle('scrolled', y > 12);
+    const heroH = hero && !reduced ? hero.offsetHeight || 1 : 0;
+    const r = road?.getBoundingClientRect();
     reveal(vh);
-    if (hero && !reduced) {
-      const h = hero.offsetHeight || 1;
-      if (y < h) hero.style.setProperty('--sy', (y / h).toFixed(3));
-    }
+    header?.classList.toggle('scrolled', y > 12);
+    if (heroH && y < heroH) hero.style.setProperty('--sy', (y / heroH).toFixed(3));
     // เส้นทางภารกิจค่อย ๆ เติมสีตามการเลื่อน
-    if (road) {
-      const r = road.getBoundingClientRect();
-      if (r.bottom > -200 && r.top < vh + 200) {
-        const p = reduced ? 1 : Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height * 0.9 || 1)));
-        road.style.setProperty('--p', p.toFixed(4));
-      }
+    if (r && r.bottom > -200 && r.top < vh + 200) {
+      const p = reduced ? 1 : Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height * 0.9 || 1)));
+      road.style.setProperty('--p', p.toFixed(4));
     }
   };
   const queue = () => {

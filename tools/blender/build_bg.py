@@ -108,12 +108,12 @@ def ico(parent, m, r, loc=(0, 0, 0), sub=1, jitter=0.0):
     return _finish(o, parent, m, loc, (random.uniform(0, 90), random.uniform(0, 90), 0), 0, 0)
 
 def torus(parent, m, R1, r1, loc=(0, 0, 0), rot=(0, 0, 0)):
-    bpy.ops.mesh.primitive_torus_add(major_radius=R1, minor_radius=r1, major_segments=72, minor_segments=10)
+    bpy.ops.mesh.primitive_torus_add(major_radius=R1, minor_radius=r1, major_segments=48, minor_segments=6)
     return _finish(bpy.context.active_object, parent, m, loc, rot, 0, 0)
 
 def tube(parent, m, pts, r, closed=False):
     cu = bpy.data.curves.new('tube', 'CURVE'); cu.dimensions = '3D'
-    cu.bevel_depth = r; cu.bevel_resolution = 3; cu.resolution_u = 6
+    cu.bevel_depth = r; cu.bevel_resolution = 1; cu.resolution_u = 5
     sp = cu.splines.new('NURBS'); sp.points.add(len(pts) - 1)
     for p, c in zip(sp.points, pts): p.co = (*c, 1)
     sp.use_endpoint_u = True; sp.order_u = 4; sp.use_cyclic_u = closed
@@ -128,7 +128,7 @@ def orbit(g, R1, tilt, moons=2, m='ring'):
     for i in range(moons):
         a = 2.1 + i * 2.4
         p = rot @ Vector((math.cos(a) * R1, math.sin(a) * R1, 0))
-        sph(g, M[['cyan', 'pink', 'gold'][i % 3]], 0.16 + 0.05 * i, loc=p, n=16)
+        sph(g, M[['cyan', 'pink', 'gold'][i % 3]], 0.16 + 0.05 * i, loc=p, n=10)
 
 # ── โมเดลอุปกรณ์เกม ──
 def monitor(name, loc, rot, s):
@@ -165,7 +165,7 @@ def console(name, loc, rot, s):
 
 def mouse(name, loc, rot, s):
     g = group(name, 'planet', loc, rot, s, spin=0.3, bob=0.25)
-    sph(g, M['white'], 1.0, (0, 0, 0), sc=(1.0, 1.55, 0.6), n=32, cut=-0.16)
+    sph(g, M['white'], 1.0, (0, 0, 0), sc=(1.0, 1.55, 0.6), n=26, cut=-0.16)
     box(g, M['violet'], (0.06, 1.1, 0.5), (0, -0.85, 0.3))
     cyl(g, M['pinkGlow'], 0.2, 0.16, (0, -0.72, 0.5), (0, 90, 0), n=20, bevel=0.03)
     for sx in (-1, 1): box(g, M['violet'], (0.08, 0.6, 0.14), (sx * 0.98, -0.1, 0.0), bevel=0.03)
@@ -220,7 +220,7 @@ def laptop(name, loc, rot, s):
 
 def mini_planet(name, loc, r, m, ring=True):
     g = group(name, 'planet', loc, (random.uniform(-20, 20), 0, random.uniform(0, 40)), 1, spin=0.1, bob=0.12)
-    sph(g, M[m], r, n=40)
+    sph(g, M[m], r, n=28)
     sph(g, M['white'], r * 0.25, (r * 0.45, -r * 0.7, r * 0.45), sc=(1, 0.3, 0.7), n=16)  # หลุมจุดสว่าง
     if ring: torus(g, M['ring'], r * 1.7, r * 0.06, rot=(16, 12, 0))
     return g
@@ -412,6 +412,8 @@ for g in [o for o in scene.objects if o.type == 'EMPTY' and o.parent is None]:
 path3 = [[round(v, 3) for v in (p.x, p.z, -p.y)] for p in PATH]
 os.makedirs(OUT_DIR, exist_ok=True)
 with open(os.path.join(OUT_DIR, 'bg.bin'), 'wb') as f: f.write(blob)
+import gzip
+with open(os.path.join(OUT_DIR, 'bg.bin.gz'), 'wb') as f: f.write(gzip.compress(bytes(blob), 9, mtime=0))  # เบราว์เซอร์ใหม่โหลดไฟล์บีบอัดนี้แทน
 with open(os.path.join(OUT_DIR, 'bg.json'), 'w') as f:
     json.dump({'col': COL_LEN, 'materials': WEB, 'groups': groups, 'path': path3, 'cam': {'z': 16, 'halfW': 12}}, f, separators=(',', ':'))
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, 'bg-scene.blend'), compress=True)
