@@ -209,11 +209,11 @@ function outcomes() {
 <section id="outcomes" class="section">
   ${space('galaxy', 'cz-skill')}
   <div class="wrap">
-    ${sectionHead('SKILL TREE', 'สิ่งที่จะได้ฝึก', 'ทักษะที่ได้ลงมือจริงตลอด 4 วัน')}
+    ${sectionHead('SKILL TREE', 'ผลลัพธ์การเรียนรู้', 'ทักษะที่จะได้รับตลอด 4 วัน')}
     <ul class="skills">
-      ${c.outcomes.map((o, i) => `<li class="skill reveal" style="--c:${colors[i % 4]};--d:${(i % 7) * 0.06}s"><span class="skill-node" aria-hidden="true">${hamster(emojis[i % emojis.length], 'skill-emoji')}</span><span class="skill-name">${e(o)}</span></li>`).join('')}
+      ${c.outcomes.map((o, i) => `<li class="skill reveal" style="--c:${colors[i % 4]};--d:${(i % 7) * 0.06}s"><span class="skill-node" aria-hidden="true">${hamster(emojis[i % emojis.length], 'skill-emoji')}</span><span class="skill-name">${o.split('|').map(x => `<span class="nowrap">${e(x)}</span>`).join(' ')}</span></li>`).join('')}
     </ul>
-    <p class="muted note skills-note reveal">เป้าหมายการเรียนรู้ของค่าย ไม่ใช่การรับประกันผลงานสำเร็จรูป${c.extras.certificate ? '' : review ? ` ส่วนเกียรติบัตรหรือไฟล์ผลงานที่ได้รับ ${pend()}` : ''}</p>
+    <p class="muted note skills-note reveal">ทักษะข้างต้นเป็นเป้าหมายการเรียนรู้ของค่าย มิใช่การรับประกันผลงานสำเร็จรูป${c.extras.certificate ? '' : review ? ` สำหรับเกียรติบัตรหรือไฟล์ผลงานที่ผู้เข้าร่วมจะได้รับ ${pend()}` : ''}</p>
   </div>
 </section>`;
 }
