@@ -53,11 +53,13 @@ const sectionHead = (tag, kicker, title, lead = '') => `
   ${lead ? `<p class="lead">${lead}</p>` : ''}
 </div>`;
 
-// แถวข้อมูลในการ์ด: ซ่อนเมื่อไม่มีค่าและไม่ได้อยู่ในโหมด preview
-const row = (label, value) => (value || preview ? `<div class="fact"><dt>${label}</dt><dd>${val(value)}</dd></div>` : '');
+// ป้าย "รอยืนยัน" แสดงเฉพาะตอนผู้จัดตรวจทาน (เปิดลิงก์พร้อม ?review) — ผู้ชมทั่วไปเห็นเฉพาะข้อมูลที่ยืนยันแล้ว ไม่รก
+const review = preview && /[?&]review\b/.test(location.search);
+// แถวข้อมูลในการ์ด: ซ่อนเมื่อไม่มีค่า (ยกเว้นโหมดตรวจทาน)
+const row = (label, value) => (value || review ? `<div class="fact"><dt>${label}</dt><dd>${val(value)}</dd></div>` : '');
 
 function hero() {
-  const slotNote = c.timeSlots.arrangement ? '' : preview ? ` ${pend('รอยืนยันการจัดรอบ')}` : '';
+  const slotNote = c.timeSlots.arrangement ? '' : review ? ` ${pend('รอยืนยันการจัดรอบ')}` : '';
   const info = (ic, label, value) => `<div class="info">${badge(ic)}<div><dt>${label}</dt><dd>${value}</dd></div></div>`;
   return `
 <section class="hero" id="top">
@@ -78,12 +80,15 @@ function hero() {
   </div>
 </section>
 <div class="wrap">
-  <dl class="infobar reveal">
-    ${info('calendar', 'วันที่', dateText())}
-    ${info('clock', 'เวลา', `${slotsText()} น.${slotNote}`)}
-    ${info('ticket', 'ค่าสมัคร', `${priceText()}${c.price.unit ? ` ${e(c.price.unit)}` : ''}`)}
-    ${c.format.label || preview ? info('pin', 'รูปแบบ', val(c.format.label)) : ''}
+  <div class="summary reveal">
+  <p class="sum-title"><span>สรุปค่ายใน 10 วินาที</span></p>
+  <dl class="infobar">
+    ${info('blocks', 'สร้างอะไร', 'เกมเอาตัวรอดธีมอวกาศ<small>เกมของตัวเอง 1 เกม เล่นได้จริง</small>')}
+    ${info('laptop', 'ใช้อะไรสร้าง', 'Unity + AI<small>AI เป็นผู้ช่วย เราเป็นคนออกแบบเอง</small>')}
+    ${info('calendar', 'เมื่อไร', `${dateText()} · 4 วัน<small>${slotsText()} น.${slotNote}</small>`)}
+    ${info('ticket', 'ค่าสมัคร', `${priceText()}${c.price.unit ? ` ${e(c.price.unit)}` : ''}<small>${c.format.label ? e(c.format.label) : 'ตลอด 4 วัน'}</small>`)}
   </dl>
+  </div>
 </div>`;
 }
 
@@ -95,7 +100,7 @@ function about() {
 <section id="about" class="section">
   ${space('galaxy', 'cz-about')}
   <div class="wrap">
-    ${sectionHead('STAGE 01', 'ค่ายนี้คืออะไร', 'เปลี่ยนจากนั่งเล่น มาเป็นคนลงมือสร้าง', e(c.about.body))}
+    ${sectionHead('STAGE 01', 'ค่ายนี้คืออะไร', 'ทำเกมของตัวเองให้เสร็จใน 3 ขั้น', e(c.about.body))}
     <ol class="stages">
       ${c.about.stages.map((s, i) => `
       <li class="stage reveal" style="--c:${look[i % 3][0]};--d:${i * 0.14}s">
@@ -211,7 +216,7 @@ function outcomes() {
     <ul class="skills">
       ${c.outcomes.map((o, i) => `<li class="skill reveal" style="--c:${colors[i % 4]};--d:${(i % 7) * 0.06}s"><span class="skill-node" aria-hidden="true">${hamster(emojis[i % emojis.length], 'skill-emoji')}</span><span class="skill-name">${e(o)}</span></li>`).join('')}
     </ul>
-    <p class="muted note skills-note reveal">เป้าหมายการเรียนรู้ของค่าย ไม่ใช่การรับประกันผลงานสำเร็จรูป${c.extras.certificate ? '' : preview ? ` ส่วนเกียรติบัตรหรือไฟล์ผลงานที่ได้รับ ${pend()}` : ''}</p>
+    <p class="muted note skills-note reveal">เป้าหมายการเรียนรู้ของค่าย ไม่ใช่การรับประกันผลงานสำเร็จรูป${c.extras.certificate ? '' : review ? ` ส่วนเกียรติบัตรหรือไฟล์ผลงานที่ได้รับ ${pend()}` : ''}</p>
   </div>
 </section>`;
 }
@@ -348,7 +353,7 @@ function faq() {
     ['ยืนยันสิทธิ์เข้าค่ายอย่างไร', c.enrollment.confirmation],
     ['มีบันทึกย้อนหลังหรือเกียรติบัตรไหม', join(x.recordings, x.certificate)],
     ['หากสมัครแล้วเข้าร่วมไม่ได้ต้องทำอย่างไร', x.absencePolicy],
-  ].filter(([, a]) => a || preview);
+  ].filter(([, a, prefix]) => a || prefix || review);
 
   const plus = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
   return `
@@ -367,7 +372,7 @@ function faq() {
       ${items.map(([q, a, prefix = ''], k) => `
       <details class="faq-item"${k >= FAQ_SHOW ? ' data-more hidden' : ''}>
         <summary><span class="faq-q">${e(q)}</span><span class="faq-icon">${plus}</span></summary>
-        <div class="faq-a"><p>${a ? e(a) : `${e(prefix)}${pend()}`}</p></div>
+        <div class="faq-a"><p>${a ? e(a) : review ? `${e(prefix)}${pend()}` : `${e(prefix)}รายละเอียดเพิ่มเติมสอบถามได้ที่ LINE @smart-school หรือโทร 090-060-2555`}</p></div>
       </details>`).join('')}
       ${items.length > FAQ_SHOW ? `<button class="faq-more" type="button" aria-expanded="false">ดูคำถามอีก ${items.length - FAQ_SHOW} ข้อ <span aria-hidden="true">↓</span></button>` : ''}
     </div>
