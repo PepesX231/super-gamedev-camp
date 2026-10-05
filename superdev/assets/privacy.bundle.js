@@ -15,7 +15,7 @@
       <path class="flame" d="M18 33c0 6 3 9 6 13 3-4 6-7 6-13z" fill="url(#g-gold)" stroke="#7a2f0a" stroke-width="2" stroke-linejoin="round"/>
     </symbol>
   </defs>
-</svg>`;function Ce(r){let n=[["about","\u0E04\u0E48\u0E32\u0E22\u0E19\u0E35\u0E49\u0E04\u0E37\u0E2D\u0E2D\u0E30\u0E44\u0E23"],["build","\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E08\u0E30\u0E44\u0E14\u0E49\u0E17\u0E33"],...d.showcase?[["showcase","\u0E1C\u0E25\u0E07\u0E32\u0E19\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19 \u0E46"]]:[],["missions","\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08 4 \u0E27\u0E31\u0E19"],["faq","FAQ"],["home","\u0E01\u0E25\u0E31\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E41\u0E23\u0E01"]];return`
+</svg>`;function Ce(r){let n=[["about","\u0E04\u0E48\u0E32\u0E22\u0E19\u0E35\u0E49\u0E04\u0E37\u0E2D\u0E2D\u0E30\u0E44\u0E23"],["build","\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E08\u0E30\u0E44\u0E14\u0E49\u0E17\u0E33"],["missions","\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08 4 \u0E27\u0E31\u0E19"],...d.showcase?[["showcase","\u0E1C\u0E25\u0E07\u0E32\u0E19\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19 \u0E46"]]:[],["faq","FAQ"],["home","\u0E01\u0E25\u0E31\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E41\u0E23\u0E01"]];return`
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="${r.home}#top" aria-label="${k(d.camp.name)} \u0E42\u0E14\u0E22 ${k(d.camp.organizer)} \u2014 \u0E01\u0E25\u0E31\u0E1A\u0E14\u0E49\u0E32\u0E19\u0E1A\u0E19">

@@ -426,7 +426,7 @@ function joinSection() {
 </section>`;
 }
 
-mount(paths, [hero(), about(), build(), showcase(), outcomes(), missions(), people(), prepare(), faq(), joinSection()].join(''));
+mount(paths, [hero(), about(), build(), outcomes(), missions(), showcase(), people(), prepare(), faq(), joinSection()].join(''));
 
 paintStarfield();
 // ฉากหลัง 3D จาก Blender — โหลดหลังหน้าเว็บพร้อมแล้ว ไม่ถ่วงการแสดงเนื้อหา

@@ -83,8 +83,8 @@ function header(p) {
   const links = [
     ['about', 'ค่ายนี้คืออะไร'],
     ['build', 'สิ่งที่จะได้ทำ'],
-    ...(c.showcase ? [['showcase', 'ผลงานเพื่อน ๆ']] : []),
     ['missions', 'ภารกิจ 4 วัน'],
+    ...(c.showcase ? [['showcase', 'ผลงานเพื่อน ๆ']] : []),
     ['faq', 'FAQ'],
     ['home', 'กลับหน้าแรก'],
   ];
