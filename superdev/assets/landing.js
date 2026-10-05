@@ -54,7 +54,7 @@ const sectionHead = (tag, kicker, title, lead = '') => `
 </div>`;
 
 // ป้าย "รอยืนยัน" แสดงเฉพาะตอนผู้จัดตรวจทาน (เปิดลิงก์พร้อม ?review) — ผู้ชมทั่วไปเห็นเฉพาะข้อมูลที่ยืนยันแล้ว ไม่รก
-const review = preview && /[?&]review\b/.test(location.search);
+const review = preview; // แสดงป้าย "รอยืนยันรายละเอียด" ไว้ ให้ทีมเห็นว่ายังขาดข้อมูลอะไร
 // แถวข้อมูลในการ์ด: ซ่อนเมื่อไม่มีค่า (ยกเว้นโหมดตรวจทาน)
 const row = (label, value) => (value || review ? `<div class="fact"><dt>${label}</dt><dd>${val(value)}</dd></div>` : '');
 
@@ -100,12 +100,11 @@ function about() {
 <section id="about" class="section">
   ${space('galaxy', 'cz-about')}
   <div class="wrap">
-    ${sectionHead('STAGE 01', 'ค่ายนี้คืออะไร', 'ทำเกมของตัวเองให้เสร็จใน 3 ขั้น', e(c.about.body))}
+    ${sectionHead('STAGE 01', 'Super GameDev Camp', 'ค่ายนี้คืออะไร', e(c.about.body))}
     <ol class="stages">
       ${c.about.stages.map((s, i) => `
       <li class="stage reveal" style="--c:${look[i % 3][0]};--d:${i * 0.14}s">
         <span class="stage-orb" aria-hidden="true"><i class="stage-ring"></i>${hamster(STAGE_HAM[i % 3], 'stage-ham')}<b class="stage-n">0${i + 1}</b></span>
-        <p class="stage-lv">LEVEL ${i + 1}</p>
         <h3>${e(s.title)}</h3>
         <p>${e(s.text)}</p>
       </li>`).join('')}
@@ -131,7 +130,7 @@ function build() {
   return `
 <section id="build" class="section build">
   <div class="wrap">
-    ${sectionHead('STAGE 02', 'สิ่งที่จะได้ทำ', 'สามระบบ ในเกมเดียวกัน', 'ทุกคนได้ทำครบทั้ง 3 ระบบ กดที่ตัวละครเพื่อดูว่าจะได้ทำอะไรบ้าง')}
+    ${sectionHead('STAGE 02', '3 ระบบในเกมเดียว', 'สิ่งที่จะได้ทำ', 'ทั้งสามส่วนคือชิ้นส่วนของเส้นทางเรียนรู้เดียวกัน ทุกคนได้ทำครบ ไม่ต้องเลือกสายใดสายหนึ่ง')}
     <div class="trio" role="list">
       ${sys.map((s, i) => `
       <button class="trio-item reveal" role="listitem" type="button" data-sys="${i}" style="--c:${SYSTEM_C[s.id]};--d:${i * 0.12}s" aria-label="ดูระบบ ${e(s.title)}">
@@ -501,7 +500,7 @@ if (dlg) {
           <p class="dd-sum">${e(d.summary)}</p>
         </div>
       </div>
-      <ul class="dd-list">${d.topics.map(t => `<li>${e(typeof t === 'string' ? t : t.text)}</li>`).join('')}</ul>`;
+      <ul class="dd-list">${d.topics.map(t => `<li>${e(typeof t === 'string' ? t : t.text)}${t.pending ? ` ${pend()}` : ''}</li>`).join('')}</ul>`;
   };
   document.querySelectorAll('.stop-btn').forEach(b => b.addEventListener('click', () => {
     show(Number(b.dataset.day));
