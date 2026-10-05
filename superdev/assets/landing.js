@@ -130,7 +130,7 @@ function build() {
   return `
 <section id="build" class="section build">
   <div class="wrap">
-    ${sectionHead('', '', 'สิ่งที่จะได้ทำ', 'ทั้งสามส่วนคือชิ้นส่วนของเส้นทางเรียนรู้เดียวกัน ทุกคนได้ทำครบ ไม่ต้องเลือกสายใดสายหนึ่ง')}
+    ${sectionHead('', '', 'สิ่งที่จะได้ทำ', 'ทุกคนได้ทำครบทั้ง 3 ส่วน กดที่ตัวละครเพื่อดูรายละเอียด')}
     <div class="trio" role="list">
       ${sys.map((s, i) => `
       <button class="trio-item reveal" role="listitem" type="button" data-sys="${i}" style="--c:${SYSTEM_C[s.id]};--d:${i * 0.12}s" aria-label="ดูระบบ ${e(s.title)}">
