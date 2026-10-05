@@ -41,7 +41,7 @@ body { margin: 0; color: var(--text); font: 400 1.0625rem/1.75 var(--font); over
   background: radial-gradient(ellipse 46% 62% at 50% 52%, rgba(6, 3, 24, 0.72), rgba(6, 3, 24, 0.5) 60%, rgba(6, 3, 24, 0.12) 100%); }
 @media (max-width: 760px) { .page::before { background: rgba(6, 3, 24, 0.58); } }
 /* ตัวหนังสือเล็กมีเงาบาง ๆ แยกจากพื้นหลังเสมอ */
-.section p, .section li, .section dd, .section dt { text-shadow: 0 1px 10px rgba(6, 3, 24, 0.9), 0 0 2px rgba(6, 3, 24, 0.8); }
+.lead, .stage p, .stage h3, .skill-name, .skills-note, .trio-name, .launch-note, .launch-price small, .tl-sub, .faq-head p { text-shadow: 0 1px 8px rgba(6, 3, 24, 0.85); }
 
 img, svg, canvas { max-width: 100%; display: block; }
 img { height: auto; }
@@ -795,15 +795,14 @@ input[aria-invalid] { border-color: var(--danger); }
 .feat-foot { margin-top: 12px; padding: 10px 16px; }
 .feat-about { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 
-/* สามระบบ: เวทีโปร่งแสงลายตาราง (ยังมองเห็นฉากหลังผ่านได้) */
-.trio { position: relative; isolation: isolate; padding: clamp(10px, 2vh, 22px) clamp(8px, 2vw, 24px) clamp(12px, 2vh, 20px); }
-.trio::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 28px; pointer-events: none;
+/* สามระบบ: ลายตารางจาง ๆ ทั้งพื้นหลัง ค่อย ๆ หายที่ขอบ (แบบ All for One) — ไม่มีกรอบ */
+#build { isolation: isolate; }
+#build::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    linear-gradient(rgba(185, 162, 255, 0.09) 1px, transparent 1px) 0 0 / 34px 34px,
-    linear-gradient(90deg, rgba(185, 162, 255, 0.09) 1px, transparent 1px) 0 0 / 34px 34px,
-    radial-gradient(ellipse 70% 80% at 50% 45%, rgba(18, 9, 60, 0.55), rgba(10, 5, 36, 0.38));
-  box-shadow: inset 0 0 0 1px rgba(185, 162, 255, 0.22), inset 0 0 60px rgba(124, 77, 255, 0.12), 0 20px 60px rgba(4, 1, 20, 0.35);
-  -webkit-mask: radial-gradient(ellipse 100% 100% at 50% 50%, #000 70%, rgba(0, 0, 0, 0.75)); mask: radial-gradient(ellipse 100% 100% at 50% 50%, #000 70%, rgba(0, 0, 0, 0.75)); }
+    linear-gradient(rgba(170, 150, 255, 0.11) 1px, transparent 1px) 50% 0 / 44px 44px,
+    linear-gradient(90deg, rgba(170, 150, 255, 0.11) 1px, transparent 1px) 50% 0 / 44px 44px,
+    radial-gradient(ellipse 60% 55% at 50% 58%, rgba(40, 24, 120, 0.35), transparent 75%);
+  -webkit-mask: radial-gradient(ellipse 62% 60% at 50% 55%, #000 30%, transparent 85%); mask: radial-gradient(ellipse 62% 60% at 50% 55%, #000 30%, transparent 85%); }
 .trio-item .mdl { max-width: min(290px, 31vh); }
 
 /* จอเตี้ย (แล็ปท็อป 650–760px) ให้ทุกส่วนอยู่ในจอเดียว */

@@ -40,7 +40,7 @@ export async function initBg3d() {
 
   let renderer;
   try {
-    renderer = new T.WebGLRenderer({ canvas, alpha: true, antialias: true, stencil: false, powerPreference: coarse ? 'low-power' : 'default' });
+    renderer = new T.WebGLRenderer({ canvas, alpha: true, antialias: !coarse || (devicePixelRatio || 1) < 1.5, stencil: false, powerPreference: coarse ? 'low-power' : 'default' });
   } catch {
     canvas.remove();
     return;
@@ -48,7 +48,7 @@ export async function initBg3d() {
   renderer.outputColorSpace = T.SRGBColorSpace;
   if (location.search.includes('perf')) window.__bg3d = renderer; // ?perf ดูจำนวน draw call ได้
   const minPR = coarse ? 0.6 : 0.75;
-  let pr = Math.min(devicePixelRatio || 1, coarse ? 1.25 : 1.5);
+  let pr = Math.min(devicePixelRatio || 1, 1.25); // พื้นหลังเบลอด้วยหมอกอยู่แล้ว ความละเอียดสูงกว่านี้ไม่ต่าง แต่หนักขึ้นมาก
 
   const scene = new T.Scene();
   scene.fog = new T.Fog(0x0c0632, 17, 46);
