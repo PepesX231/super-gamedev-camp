@@ -41,7 +41,9 @@ body { margin: 0; color: var(--text); font: 400 1.0625rem/1.75 var(--font); over
   background: radial-gradient(ellipse 46% 62% at 50% 52%, rgba(6, 3, 24, 0.72), rgba(6, 3, 24, 0.5) 60%, rgba(6, 3, 24, 0.12) 100%); }
 @media (max-width: 760px) { .page::before { background: rgba(6, 3, 24, 0.58); } }
 /* ตัวหนังสือเล็กมีเงาบาง ๆ แยกจากพื้นหลังเสมอ */
-.lead, .stage p, .stage h3, .skill-name, .skills-note, .trio-name, .launch-note, .launch-price small, .tl-sub, .faq-head p { text-shadow: 0 1px 8px rgba(6, 3, 24, 0.85); }
+.lead, .stage p, .stage h3, .skill-name, .skills-note, .trio-name, .launch-note, .launch-price small, .tl-sub { text-shadow: 0 1px 8px rgba(6, 3, 24, 0.85); }
+/* ของพื้นสว่าง (ปุ่ม ป้ายคำพูด ป้ายสถานะ) ห้ามมีเงาดำรอบตัวหนังสือ */
+.btn, .btn *, .crew-bubble, .faq-bubble, .spot-cta, .spot-cta *, .pending, .tag, .player-label, .tap, .stage-n { text-shadow: none !important; }
 
 img, svg, canvas { max-width: 100%; display: block; }
 img { height: auto; }
