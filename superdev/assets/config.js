@@ -89,7 +89,7 @@ export default {
   showcase: {
     title: 'COMMAND SELECT',
     tagline: 'Steal the show // Take their heart',
-    about: 'เกมแอ็กชันมุมมองบุคคลที่หนึ่งที่สร้างด้วย Unity ผู้เล่นแทรกซึมเข้าไปใน “The Vault” ฝ่าด่านศัตรูด้วยอาวุธและสกิล ก่อนเจอบอสใหญ่อย่าง The Core และ Draco Orbis — ทั้งระบบต่อสู้ UI กล้อง และ Cutscene ทำขึ้นเองทั้งหมด',
+    about: 'เกมแอ็กชันมุมมองบุคคลที่หนึ่ง บุกเข้า The Vault ฝ่าศัตรูด้วยอาวุธและสกิล แล้วสู้บอส The Core ทุกระบบทำเองทั้งหมด',
     tags: ['Unity', 'First-person', 'Boss fight', 'Cutscene', 'UI'],
     credits: ['นาย ชมน์ปภพ ดีจริง', 'นาย อนิรุจ เรืองสุข'],
     link: { label: 'ลองเล่นเดโมบน itch.io', href: 'https://pepess1.itch.io/comand-select', note: 'เดโมรองรับเฉพาะ PC (Windows)' },
@@ -99,8 +99,8 @@ export default {
       length: '1:42',
     },
     shots: [
-      { src: 'assets/media/shot-core.webp', title: 'THE CORE', caption: 'บอสผู้พิทักษ์ห้องนิรภัย — ออกแบบฉาก แสง และท่าโจมตีเอง' },
-      { src: 'assets/media/shot-eye.webp', title: 'IT SEES YOU.', caption: 'Cutscene ตอนที่ The Vault ตื่นขึ้น — เล่าเรื่องด้วยกล้องและเอฟเฟกต์' },
+      { src: 'assets/media/shot-core.webp', title: 'THE CORE', caption: 'บอสผู้พิทักษ์ห้องนิรภัย' },
+      { src: 'assets/media/shot-eye.webp', title: 'IT SEES YOU.', caption: 'Cutscene ตอน The Vault ตื่น' },
     ],
   },
 
@@ -156,11 +156,11 @@ export default {
   },
 
   about: {
-    body: 'Super GameDev Camp คือค่าย 4 วันที่ชวนผู้เข้าร่วมเปลี่ยนบทบาทจากผู้เล่นมาเป็นผู้สร้าง เริ่มจากสำรวจว่าอะไรทำให้เกมสนุก ออกแบบโลกของตัวเอง ลงมือสร้างตัวละครและระบบต่าง ๆ ด้วย Unity โดยมี AI เป็นผู้ช่วย แล้วทดสอบ ปรับปรุง และนำเสนอผลงานให้เพื่อนได้ลองเล่น',
+    body: '4 วัน จากคนเล่นเกม สู่คนที่สร้างเกมของตัวเองได้ คิดเอง สร้างเอง แล้วให้เพื่อนลองเล่น',
     stages: [
-      { title: 'คิดและออกแบบ', text: 'สำรวจว่าเกมสนุกเพราะอะไร แล้ววาง Storyboard และแผนที่ของเกมตัวเอง' },
-      { title: 'สร้างและทดลอง', text: 'ลงมือทำตัวละคร สกิล และศัตรูใน Unity โดยใช้ AI ช่วยในขั้นตอนพัฒนา' },
-      { title: 'ทดสอบ ปรับปรุง และนำเสนอ', text: 'ให้เพื่อนลองเล่น เก็บรายละเอียด แล้วเล่าเรื่องผลงานของเรา' },
+      { title: 'คิดและออกแบบ', text: 'หาว่าเกมสนุกเพราะอะไร แล้ววาดแผนที่เกมของเรา' },
+      { title: 'สร้างและทดลอง', text: 'ทำตัวละคร สกิล ศัตรูใน Unity โดยมี AI ช่วย' },
+      { title: 'ทดสอบ ปรับปรุง และนำเสนอ', text: 'ให้เพื่อนลองเล่น แล้วโชว์ผลงานบนเวที' },
     ],
   },
 

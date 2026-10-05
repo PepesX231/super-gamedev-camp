@@ -126,7 +126,7 @@ function build() {
   return `
 <section id="build" class="section build">
   <div class="wrap">
-    ${sectionHead('STAGE 02', 'สิ่งที่จะได้ทำ', 'สามระบบ ในเกมเดียวกัน', 'ทั้งสามส่วนคือชิ้นส่วนของเส้นทางเรียนรู้เดียวกัน ทุกคนได้ทำครบ ไม่ต้องเลือกสายใดสายหนึ่ง')}
+    ${sectionHead('STAGE 02', 'สิ่งที่จะได้ทำ', 'สามระบบ ในเกมเดียวกัน', 'ทุกคนได้ทำครบทั้ง 3 ระบบ กดที่ตัวละครเพื่อดูว่าจะได้ทำอะไรบ้าง')}
     <div class="trio" role="list">
       ${sys.map((s, i) => `
       <button class="trio-item reveal" role="listitem" type="button" data-sys="${i}" style="--c:${SYSTEM_C[s.id]};--d:${i * 0.12}s" aria-label="ดูระบบ ${e(s.title)}">
@@ -181,30 +181,18 @@ function showcase() {
 <section id="showcase" class="section showcase">
   ${space('hole', 'cz-show')}
   <div class="wrap">
-    ${sectionHead('REPLAY', 'ผลงานจริงจากค่าย', 'ผลงานเพื่อน ๆ ในค่าย Hamster Hub', 'ไม่ใช่ภาพตัวอย่าง นี่คือเกมจริงที่เพื่อน ๆ ในค่ายของ Hamster Hub ลงมือสร้างด้วย Unity ตั้งแต่ออกแบบด่าน บอส UI ไปจนถึง Cutscene')}
     <div class="show-grid">
       <div class="player-wrap reveal">${v ? hamster('astro-wave', 'ham-peek') : ''}${player}</div>
-      <article class="card glow show-info reveal" style="--c:var(--pink);--d:.12s">
-        <p class="tag">GAME PROJECT</p>
+      <article class="show-info reveal" style="--c:var(--pink);--d:.12s">
+        ${sectionHead('REPLAY', 'ผลงานจริงจากค่าย', 'ผลงานเพื่อน ๆ ในค่าย Hamster Hub')}
+        <p class="show-kick">GAME PROJECT${s.credits?.length ? ` · โดย ${s.credits.map(e).join(' & ')}` : ''}</p>
         <h3 class="show-title">${e(s.title)}</h3>
         ${s.tagline ? `<p class="show-tagline">${e(s.tagline)}</p>` : ''}
-        <p>${e(s.about)}</p>
-        ${s.tags?.length ? `<ul class="chips">${s.tags.map(t => `<li>${e(t)}</li>`).join('')}</ul>` : ''}
-        ${s.credits?.length ? `<p class="show-credit"><span>สร้างโดย</span> ${s.credits.map(e).join(' · ')}</p>` : ''}
-        ${s.link ? `<a class="btn btn-ghost" href="${e(s.link.href)}"${extAttr(s.link.href)}><span>${e(s.link.label)} ↗</span></a>${s.link.note ? `<p class="muted show-note">${e(s.link.note)}</p>` : ''}` : ''}
+        <p class="show-about">${e(s.about)}</p>
+        ${s.shots?.length ? `<ul class="thumbs">${s.shots.map(x => `<li><figure><img src="${e(x.src)}" alt="ภาพจากเกม ${e(s.title)}: ${e(x.title)}" width="1280" height="720" loading="lazy" decoding="async"><figcaption><strong>${e(x.title)}</strong> ${e(x.caption)}</figcaption></figure></li>`).join('')}</ul>` : ''}
+        ${s.link ? `<a class="btn btn-ghost btn-sm" href="${e(s.link.href)}"${extAttr(s.link.href)}><span>${e(s.link.label)} ↗</span></a>${s.link.note ? ` <span class="muted show-note">${e(s.link.note)}</span>` : ''}` : ''}
       </article>
     </div>
-    ${s.shots?.length ? `
-    <ul class="shots">
-      ${s.shots.map((x, i) => `
-      <li class="reveal" style="--d:${i * 0.12}s">
-        <figure class="shot">
-          <img src="${e(x.src)}" alt="ภาพจากเกม ${e(s.title)}: ${e(x.title)}" width="1280" height="720" loading="lazy" decoding="async">
-          <figcaption><strong>${e(x.title)}</strong>${e(x.caption)}</figcaption>
-        </figure>
-      </li>`).join('')}
-    </ul>` : ''}
-    <p class="note muted reveal">ค่ายนี้จะพาทุกคนเดินเส้นทางเดียวกัน — ออกแบบ สร้างระบบ ประกอบเป็นเกม แล้วนำเสนอให้เพื่อนได้เล่น ขอบเขตผลงานของแต่ละคนขึ้นอยู่กับไอเดียและความคืบหน้าระหว่างค่าย</p>
   </div>
 </section>`;
 }
@@ -220,7 +208,7 @@ function outcomes() {
     <ul class="skills">
       ${c.outcomes.map((o, i) => `<li class="skill reveal" style="--c:${colors[i % 4]};--d:${(i % 7) * 0.06}s"><span class="skill-node" aria-hidden="true">${hamster(emojis[i % emojis.length], 'skill-emoji')}</span><span class="skill-name">${e(o)}</span></li>`).join('')}
     </ul>
-    <p class="muted note skills-note reveal">รายการนี้คือเป้าหมายการเรียนรู้ของค่าย ไม่ใช่การรับประกันผลงานสำเร็จรูป${c.extras.certificate ? '' : preview ? ` ส่วนเกียรติบัตรหรือไฟล์ผลงานที่ได้รับ ${pend()}` : ''}</p>
+    <p class="muted note skills-note reveal">เป้าหมายการเรียนรู้ของค่าย ไม่ใช่การรับประกันผลงานสำเร็จรูป${c.extras.certificate ? '' : preview ? ` ส่วนเกียรติบัตรหรือไฟล์ผลงานที่ได้รับ ${pend()}` : ''}</p>
   </div>
 </section>`;
 }
@@ -338,6 +326,8 @@ function comets() {
   </div>`;
 }
 
+const FAQ_SHOW = 6;
+
 function faq() {
   const p = c.preparation, x = c.extras;
   const join = (...parts) => (parts.every(Boolean) ? parts.join(' ') : null);
@@ -372,11 +362,12 @@ function faq() {
       </div>
     </div>
     <div class="faq-list reveal" style="--d:.1s">
-      ${items.map(([q, a, prefix = '']) => `
-      <details class="faq-item">
+      ${items.map(([q, a, prefix = ''], k) => `
+      <details class="faq-item"${k >= FAQ_SHOW ? ' data-more hidden' : ''}>
         <summary><span class="faq-q">${e(q)}</span><span class="faq-icon">${plus}</span></summary>
         <div class="faq-a"><p>${a ? e(a) : `${e(prefix)}${pend()}`}</p></div>
       </details>`).join('')}
+      ${items.length > FAQ_SHOW ? `<button class="faq-more" type="button" aria-expanded="false">ดูคำถามอีก ${items.length - FAQ_SHOW} ข้อ <span aria-hidden="true">↓</span></button>` : ''}
     </div>
       ${links.length ? `
       <div class="faq-contact reveal">
@@ -404,7 +395,6 @@ function joinSection() {
       <div class="launch-copy">
         <p class="kicker"><span class="tag">READY?</span>สมัครเข้าค่าย</p>
         <h2><span class="nowrap">พร้อมออกเดินทาง</span><wbr><span class="nowrap">หรือยัง</span></h2>
-        <p class="lead">${e(c.camp.subhead)}</p>
         <p class="launch-price"><strong>${c.price.amount.toLocaleString('th-TH')}</strong><span>${e(c.price.currency)}${c.price.unit ? ` ${e(c.price.unit)}` : ''}<small>ค่าสมัครตลอด 4 วัน${c.price.includes.length ? ` · รวม ${e(c.price.includes.join(', '))}` : ''}</small></span></p>
         <ul class="launch-meta">
           ${meta('calendar', 'วันที่', dateText())}
@@ -416,7 +406,7 @@ function joinSection() {
           <a class="btn btn-ghost btn-lg" href="#faq"><span>มีคำถาม?</span></a>
         </div>
         ${reg.deadline && reg.state === 'open' ? `<p class="countdown" id="countdown" role="timer" aria-live="off"></p>` : ''}
-        <p class="launch-note">${payNote}</p>
+
       </div>
       <div class="crew" aria-hidden="true">
         <span class="crew-trail"></span>
@@ -430,6 +420,7 @@ function joinSection() {
     <div class="join-steps reveal">
       <h3>สมัครอย่างไร</h3>
       <ol class="steps">${en.steps.map((x, i) => `<li><span class="step-n">${i + 1}</span><span>${e(x)}</span></li>`).join('')}</ol>
+      <p class="launch-note">${payNote}</p>
       ${en.confirmation ? `<p class="muted"><strong>การยืนยันสิทธิ์:</strong> ${e(en.confirmation)}</p>` : ''}
     </div>
   </div>
@@ -439,6 +430,12 @@ function joinSection() {
 mount(paths, [hero(), skyfall(), about(), build(), showcase(), outcomes(), missions(), people(), prepare(), faq(), joinSection()].join(''));
 
 paintStarfield();
+
+// FAQ: แสดง 6 ข้อแรก ที่เหลือกดดูเพิ่ม
+document.querySelector('.faq-more')?.addEventListener('click', ev => {
+  document.querySelectorAll('.faq-item[data-more]').forEach(d => (d.hidden = false));
+  ev.currentTarget.remove();
+});
 
 // สามระบบ: กดโมเดล → เวทีแนะนำระบบ (ซ้าย/ขวา/จุดด้านล่าง/ปุ่มกลับ) และปุ่มดูรายละเอียดเปิดรายการหัวข้อ
 const spot = document.getElementById('spot');
@@ -457,7 +454,7 @@ if (spot) {
     trio.hidden = true;
     spot.hidden = false;
     go(i);
-    spot.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    spot.scrollIntoView({ block: 'start', behavior: 'smooth' });
     spot.querySelector('.spot-back').focus({ preventScroll: true });
   };
   trio.querySelectorAll('[data-sys]').forEach(b => b.addEventListener('click', () => open(Number(b.dataset.sys))));

@@ -222,6 +222,8 @@ export async function initModels() {
       renderer.setPixelRatio(dpr);
       renderer.setSize(rw, rh, false);
       cam.aspect = rw / rh;
+      // โมเดลออกแบบไว้สำหรับกรอบ 4:3 — กรอบแคบกว่านั้นถอยกล้องออก ไม่ให้วงแหวน/ของที่โคจรโดนขอบตัด
+      cam.position.z = 10 * Math.max(1 / cam.aspect, 0.75);
       cam.updateProjectionMatrix();
     }
   };
