@@ -43,7 +43,11 @@ body { margin: 0; color: var(--text); font: 400 1.0625rem/1.75 var(--font); over
 /* ตัวหนังสือเล็กมีเงาบาง ๆ แยกจากพื้นหลังเสมอ */
 .lead, .stage p, .stage h3, .skill-name, .skills-note, .trio-name, .launch-note, .launch-price small, .tl-sub { text-shadow: 0 1px 8px rgba(6, 3, 24, 0.85); }
 /* ของพื้นสว่าง (ปุ่ม ป้ายคำพูด ป้ายสถานะ) ห้ามมีเงาดำรอบตัวหนังสือ */
-.btn, .btn *, .crew-bubble, .faq-bubble, .spot-cta, .spot-cta *, .pending, .tag, .player-label, .tap, .stage-n { text-shadow: none !important; }
+.btn:not(.btn-primary), .btn:not(.btn-primary) *, .crew-bubble, .faq-bubble, .spot-cta, .spot-cta *, .pending, .tag, .player-label, .tap, .stage-n { text-shadow: none !important; }
+/* สีตัวหนังสือบนพื้นสว่าง: ไม่ใช้ดำ — ปุ่มทองเป็นตัวขาวขอบส้มแบบปุ่มเกม, ป้ายขาวเป็นตัวม่วง */
+.btn-primary, .btn-primary:hover, .btn-primary span { color: #fff !important; text-shadow: 0 2px 0 #c2571a, 0 0 2px #c2571a, 0 -1px 0 rgba(194, 87, 26, 0.6) !important; }
+.crew-bubble, .faq-bubble, .spot-cta { color: #5a2be0 !important; }
+.btn-primary svg { fill: currentColor; }
 
 img, svg, canvas { max-width: 100%; display: block; }
 img { height: auto; }
