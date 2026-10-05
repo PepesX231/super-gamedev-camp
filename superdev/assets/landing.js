@@ -1,7 +1,7 @@
 import { c, e, preview, pend, val, dateText, priceText, slotsText, registrationState, registerLink, logoImg, mount } from './core.js';
 import { systemArt } from './art.js';
 import { sceneArt } from './scene.js';
-import { gear, ufo, space, skyfall, paintStarfield, depthLayers, initDepth } from './cosmos.js';
+import { gear, ufo, space, paintStarfield } from './cosmos.js';
 
 const paths = { root: '', home: '', register: 'register/index.html', privacy: 'privacy/index.html' };
 const reg = registrationState();
@@ -421,10 +421,11 @@ function joinSection() {
 </section>`;
 }
 
-mount(paths, [hero(), depthLayers(), skyfall(), about(), build(), showcase(), outcomes(), missions(), people(), prepare(), faq(), joinSection()].join(''));
+mount(paths, [hero(), about(), build(), showcase(), outcomes(), missions(), people(), prepare(), faq(), joinSection()].join(''));
 
 paintStarfield();
-initDepth({ reduced: matchMedia('(prefers-reduced-motion: reduce)').matches });
+// ฉากหลัง 3D จาก Blender — โหลดหลังหน้าเว็บพร้อมแล้ว ไม่ถ่วงการแสดงเนื้อหา
+(window.requestIdleCallback || ((f) => setTimeout(f, 300)))(() => import('./bg3d.js').then((m) => m.initBg3d()).catch(() => {}), { timeout: 1200 });
 
 // FAQ: แสดง 6 ข้อแรก ที่เหลือกดดูเพิ่ม
 document.querySelector('.faq-more')?.addEventListener('click', ev => {
