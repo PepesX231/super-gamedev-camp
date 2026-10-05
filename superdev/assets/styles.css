@@ -446,7 +446,7 @@ details[open] summary::after { transform: rotate(45deg); }
 .showcase .section-head { text-align: center; }
 .showcase .section-head .kicker { justify-content: center; }
 .showcase .section-head h2::after { margin-inline: auto; }
-.feature { position: relative; width: min(100%, 1040px, max(680px, calc((100svh - var(--header-h) - 240px) * 1.78))); margin: 0 auto; padding-top: clamp(40px, 5vw, 64px); }
+.feature { position: relative; width: min(100%, 1040px, max(420px, calc((100svh - var(--header-h) - 365px) * 1.78))); margin: 0 auto; }
 .showcase .section-head { margin-bottom: 4px; }
 .feature .player { z-index: 1; border-radius: 22px; padding: 10px; background: linear-gradient(180deg, #5a2386, #1a0e62); box-shadow: 0 0 0 1.5px rgba(255, 143, 184, 0.45), 0 24px 70px rgba(230, 30, 60, 0.28), 0 0 120px rgba(124, 77, 255, 0.35); }
 .player-screen { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #000; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.12); }
@@ -474,7 +474,8 @@ details[open] summary::after { transform: rotate(45deg); }
 .feat-about { flex: 1 1 340px; margin: 0; font-size: 1rem; line-height: 1.65; color: #ece8ff; }
 .feat-about strong { color: #fff; }
 .feat-link { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
-.ham-peek { position: absolute; right: clamp(20px, 7%, 64px); top: 0; z-index: 0; width: clamp(70px, 9vw, 110px); animation: peek 7s var(--ease) infinite; }
+.feature .ham-peek { position: absolute; right: -54px; top: 18%; z-index: 0; width: clamp(70px, 8vw, 100px); rotate: 80deg; animation: none; transform-origin: 50% 100%; }
+@media (max-width: 1180px) { .feature .ham-peek { display: none; } }
 .show-note { font-size: 0.8125rem; color: var(--muted); }
 .show-title { font: italic 800 clamp(1.9rem, 3.4vw, 2.5rem)/1.1 var(--display); letter-spacing: 0.01em; color: #fff; text-shadow: 3px 3px 0 #d6123a, 0 0 26px rgba(255, 60, 90, 0.5); }
 .show-tagline { font: 400 1.105rem/1.4 var(--pixel); letter-spacing: 0.08em; text-transform: uppercase; color: #ff9fb0; }
@@ -607,7 +608,6 @@ details[open] summary::after { transform: rotate(45deg); }
 .loadout-list .fact { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 16px; padding: 9px 2px; border-bottom: 1px dashed rgba(185, 162, 255, 0.22); }
 .loadout-list .fact dt { margin: 0; font-size: 1rem; color: #ece8ff; font-weight: 600; }
 .loadout-list .fact dd { margin: 0; text-align: right; font-weight: 500; color: var(--muted); }
-@media (max-width: 480px) { .loadout-list .fact { grid-template-columns: minmax(0, 1fr); } .loadout-list .fact dd { text-align: left; } }
 
 /* FAQ: หัวข้อซ้าย รายการคำถามแบบเส้นคั่นด้านขวา (แบบเดียวกับเว็บ All for One) + ดาวหางประดับ */
 .faq-section { overflow: hidden; isolation: isolate; }
@@ -679,7 +679,7 @@ details[open] summary::after { transform: rotate(45deg); }
 .launch-note { margin: 18px 0 0; font-size: 0.875rem; color: var(--muted); }
 .countdown { margin: 14px 0 0; color: var(--gold); font-weight: 600; }
 .launch-price { display: flex; align-items: baseline; gap: 12px; margin: 18px 0 4px; }
-.launch-price strong { font: italic 800 clamp(3.6rem, 8vw, 5.2rem)/1 var(--display); padding-right: 0.06em; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 0 #9a4a10) drop-shadow(0 0 22px rgba(255, 170, 30, 0.4)); }
+.launch-price strong { font: italic 800 clamp(3.6rem, 8vw, 5.2rem)/1 var(--display); padding-right: 0.06em; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 0 #9a4a10) drop-shadow(0 0 22px rgba(255, 170, 30, 0.4));  text-shadow: none;}
 .launch-price span { font: 700 1.3rem/1.2 var(--display); }
 .launch-price small { display: block; margin-top: 4px; font: 400 0.875rem/1.4 var(--font); color: var(--muted); }
 .crew { position: relative; height: clamp(300px, min(40vw, 56vh), 470px); }
@@ -788,6 +788,78 @@ input[aria-invalid] { border-color: var(--danger); }
 @keyframes ddIn { from { opacity: 0; translate: 0 24px; scale: 0.96; } }
 @keyframes twinkleSoft { 50% { opacity: 0.55; } }
 @keyframes blink { 50% { opacity: 0.25; } }
+
+/* ── 9.5 พอดีจอ (คอม) + กระชับบนมือถือ ───────────────────── */
+.showcase .section-head h2 { font-size: clamp(1.7rem, min(3.4vw, 6vh), 2.6rem); }
+.showcase .section-head h2::after { margin-top: 10px; height: 5px; }
+.feat-foot { margin-top: 12px; padding: 10px 16px; }
+.feat-about { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+
+/* สามระบบ: เวทีโปร่งแสงลายตาราง (ยังมองเห็นฉากหลังผ่านได้) */
+.trio { position: relative; isolation: isolate; padding: clamp(10px, 2vh, 22px) clamp(8px, 2vw, 24px) clamp(12px, 2vh, 20px); }
+.trio::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 28px; pointer-events: none;
+  background:
+    linear-gradient(rgba(185, 162, 255, 0.09) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(90deg, rgba(185, 162, 255, 0.09) 1px, transparent 1px) 0 0 / 34px 34px,
+    radial-gradient(ellipse 70% 80% at 50% 45%, rgba(18, 9, 60, 0.55), rgba(10, 5, 36, 0.38));
+  box-shadow: inset 0 0 0 1px rgba(185, 162, 255, 0.22), inset 0 0 60px rgba(124, 77, 255, 0.12), 0 20px 60px rgba(4, 1, 20, 0.35);
+  -webkit-mask: radial-gradient(ellipse 100% 100% at 50% 50%, #000 70%, rgba(0, 0, 0, 0.75)); mask: radial-gradient(ellipse 100% 100% at 50% 50%, #000 70%, rgba(0, 0, 0, 0.75)); }
+.trio-item .mdl { max-width: min(290px, 31vh); }
+
+/* จอเตี้ย (แล็ปท็อป 650–760px) ให้ทุกส่วนอยู่ในจอเดียว */
+@media (min-width: 900px) and (max-height: 780px) {
+  .road { height: clamp(260px, calc(100svh - var(--header-h) - 380px), 520px); margin-bottom: 56px; }
+  .trio-item .mdl { max-width: min(290px, 28vh); }
+  .crew { height: clamp(240px, 44vh, 380px) !important; }
+  .crew { height: clamp(260px, 48vh, 400px); }
+  .launch-price { margin-top: 10px; }
+  .launch-price strong { font-size: clamp(3rem, 7vw, 4.4rem); }
+  .launch-meta { margin: 10px 0 14px; }
+  .join-steps { margin-top: 24px; }
+  /* จอเตี้ย: คลิปใหญ่ซ้าย รายละเอียดเป็นคอลัมน์ขวา (ไม่ต้องเลื่อนลง) */
+  .feature { width: min(100%, 1180px); display: grid; grid-template-columns: minmax(0, calc((100svh - var(--header-h) - 250px) * 1.78)) minmax(240px, 290px); gap: 20px; justify-content: center; align-items: end; }
+  .feat-foot { margin: 0; flex-direction: column; align-items: flex-start; padding: 16px 18px; }
+  .feat-about { flex: none; display: block; -webkit-line-clamp: none; }
+  .feat-link { flex-direction: column; align-items: flex-start; }
+  .steps li { padding: 8px 12px; }
+  .launch-note { margin-top: 10px; }
+}
+
+@media (max-width: 600px) {
+  /* ข้อมูลค่าย: 2x2 */
+  .infobar { grid-auto-flow: row !important; grid-template-columns: 1fr 1fr !important; }
+  .infobar .info { padding: 12px 14px !important; gap: 10px !important; border: 0 !important; }
+  .infobar .info:nth-child(3) { order: 1; border-left: 1px solid var(--line) !important; }
+  .infobar .info:nth-child(2) { order: 2; grid-column: 1 / -1; border-top: 1px solid var(--line) !important; }
+  .infobar .info:nth-child(4) { order: 3; grid-column: 1 / -1; border-top: 1px solid var(--line) !important; }
+  .infobar .badge { --s: 34px; }
+  .infobar dd { font-size: 0.9375rem; }
+  /* ค่ายนี้คืออะไร: ภาพซ้าย ข้อความขวา */
+  .stages { gap: 18px; }
+  .stage { display: grid; grid-template-columns: 116px minmax(0, 1fr); align-items: center; gap: 4px 16px; padding: 0; text-align: left; }
+  .stage-orb { grid-row: span 3; width: 80px !important; height: 80px !important; margin: 26px auto 0 !important; }
+  .stage-n { width: 30px; height: 30px; font-size: 1rem; right: -10px; }
+  .stage-lv { margin: 0; font-size: 1rem; }
+  .stage h3 { margin: 0; font-size: 1.2rem; }
+  .stage p:last-child { margin: 0; max-width: none; font-size: 0.95rem; line-height: 1.55; }
+  /* ทักษะ: 3 คอลัมน์ */
+  .skills { gap: 18px 6px; }
+  .skill { flex-basis: 30%; gap: 6px; }
+  .skill-node { width: 76px; height: 76px; }
+  .skill-name { font-size: 0.875rem; line-height: 1.35; }
+  /* เตรียมตัว: หัวข้อกับค่าอยู่บรรทัดเดียวกัน */
+  .loadout-list .fact { grid-template-columns: minmax(0, 1fr) auto; padding: 8px 0; }
+  .loadout-list .fact dt { font-size: 0.9375rem; }
+  .loadout-list .fact dd { text-align: right; }
+  .loadout-list .pending { font-size: 0.75rem; }
+  .two-col { gap: 22px !important; }
+  /* สมัคร: ภาพจรวดเล็กลง ขั้นตอนกระชับ */
+  .crew { height: 240px !important; max-width: 320px !important; }
+  .crew-bubble { font-size: 0.875rem; padding: 6px 12px; }
+  .steps { gap: 8px; }
+  .steps li { padding: 8px 12px; font-size: 0.9375rem; }
+  .launch-meta li { flex: 1 1 100%; }
+}
 
 /* ── 10 ลดการเคลื่อนไหว ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
