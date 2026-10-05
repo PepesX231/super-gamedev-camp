@@ -11,7 +11,7 @@
   --slab: #0a0433;
   --line: rgba(176, 152, 255, 0.26);
   --text: #f7f4ff;
-  --muted: #cdc5f5;
+  --muted: #ddd7fb;
   --violet: #7c4dff;
   --violet-hi: #b9a2ff;
   --blue: #4f7dff;
@@ -36,6 +36,12 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(
 body { margin: 0; color: var(--text); font: 400 1.0625rem/1.75 var(--font); overflow-x: hidden; }
 /* พื้นหลังอวกาศ: canvas .starfield (cosmos.js) วาดครั้งเดียว ใต้ทุกอย่าง — สีพื้นสำรองอยู่ที่ html */
 .page { position: relative; z-index: 1; overflow-x: clip; }
+/* ม่านมืดกลางจอ: กันฉากหลัง 3D/ดาวกลืนกับตัวหนังสือ (ขอบซ้ายขวายังเห็นโมเดลชัด) */
+.page::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 46% 62% at 50% 52%, rgba(6, 3, 24, 0.72), rgba(6, 3, 24, 0.5) 60%, rgba(6, 3, 24, 0.12) 100%); }
+@media (max-width: 760px) { .page::before { background: rgba(6, 3, 24, 0.58); } }
+/* ตัวหนังสือเล็กมีเงาบาง ๆ แยกจากพื้นหลังเสมอ */
+.section p, .section li, .section dd, .section dt { text-shadow: 0 1px 10px rgba(6, 3, 24, 0.9), 0 0 2px rgba(6, 3, 24, 0.8); }
 
 img, svg, canvas { max-width: 100%; display: block; }
 img { height: auto; }
@@ -256,7 +262,7 @@ details[open] summary::after { transform: rotate(45deg); }
 
 /* ── ท้องฟ้าจักรวาล (canvas วาดครั้งเดียว) + ของร่วงเป็นฉากหลังทั้งหน้า ── */
 .bg3d { position: fixed; left: 0; top: 0; z-index: -1; width: 100%; height: 100vh; height: 100lvh; pointer-events: none; opacity: 0; transition: opacity 1.4s ease; }
-.bg3d.on { opacity: 0.88; }
+.bg3d.on { opacity: 0.8; }
 .starfield { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
 
 /* ── จักรวาลหลายชั้น 2.5D: ไกล (เล็ก เบลอ จาง) → กลาง → ใกล้ (ใหญ่ เบลอแบบชัดตื้น) + รถไฟจากจอพอร์ทัล ── */
@@ -436,45 +442,49 @@ details[open] summary::after { transform: rotate(45deg); }
 
 /* ผลงานจากค่ายที่แล้ว */
 .showcase::before { content: ''; position: absolute; inset: 8% 0; z-index: -1; pointer-events: none; background: radial-gradient(50% 60% at 30% 40%, rgba(230, 30, 60, 0.18), transparent 70%), radial-gradient(40% 50% at 85% 60%, rgba(124, 77, 255, 0.2), transparent 70%); }
-.show-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: center; }
-@media (min-width: 980px) { .show-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 44px; align-items: center; } .show-grid .player-wrap { order: 2; } .show-grid .show-info { order: 1; } }
-.show-info .section-head { margin-bottom: 18px; }
-.show-info .section-head h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
-.player { position: relative; padding: 12px 12px 0; background: linear-gradient(180deg, #4a1a6e, #1a0e62); }
-.player-screen { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.12); }
+/* คลิปเดียวเด่น ๆ: กว้างเต็มที่เท่าที่ยังอยู่ในจอเดียว */
+.showcase .section-head { text-align: center; }
+.showcase .section-head .kicker { justify-content: center; }
+.showcase .section-head h2::after { margin-inline: auto; }
+.feature { position: relative; width: min(100%, 1040px, max(680px, calc((100svh - var(--header-h) - 240px) * 1.78))); margin: 0 auto; padding-top: clamp(40px, 5vw, 64px); }
+.showcase .section-head { margin-bottom: 4px; }
+.feature .player { z-index: 1; border-radius: 22px; padding: 10px; background: linear-gradient(180deg, #5a2386, #1a0e62); box-shadow: 0 0 0 1.5px rgba(255, 143, 184, 0.45), 0 24px 70px rgba(230, 30, 60, 0.28), 0 0 120px rgba(124, 77, 255, 0.35); }
+.player-screen { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #000; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.12); }
 .player video { display: block; width: 100%; height: 100%; object-fit: cover; background: #000; }
 .player-play {
-  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; border: 0; padding: 0; cursor: pointer; color: #fff;
-  background: radial-gradient(closest-side, rgba(10, 2, 20, 0.15), rgba(10, 2, 20, 0.55)), url('media/trailer-poster.webp') center / cover;
+  position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; justify-items: center; gap: 12px; border: 0; padding: 0; cursor: pointer; color: #fff;
+  background: radial-gradient(closest-side, rgba(10, 2, 20, 0.1), rgba(10, 2, 20, 0.45)), url('media/trailer-poster.webp') center / cover;
   font: 800 1.15rem/1.2 var(--display); transition: opacity 0.3s;
 }
-.player-btn { display: grid; place-items: center; width: clamp(68px, 9vw, 92px); aspect-ratio: 1; border-radius: 50%; background: var(--grad-gold); box-shadow: 0 6px 0 #b3541e, 0 0 0 8px rgba(255, 210, 63, 0.22), 0 0 50px rgba(255, 138, 31, 0.7); transition: transform 0.2s var(--ease); }
+.player-btn { display: grid; place-items: center; width: clamp(68px, 9vw, 96px); aspect-ratio: 1; border-radius: 50%; background: var(--grad-gold); box-shadow: 0 6px 0 #b3541e, 0 0 0 8px rgba(255, 210, 63, 0.22), 0 0 50px rgba(255, 138, 31, 0.7); transition: transform 0.2s var(--ease); }
 .player-btn svg { width: 46%; margin-left: 8%; fill: var(--ink); }
 .player-play:hover .player-btn { transform: scale(1.08); }
 .player-play:active .player-btn { transform: scale(0.96); }
-.player-label { padding: 6px 14px; border-radius: 10px; background: rgba(6, 3, 24, 0.72); text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5); }
+.player-label { padding: 6px 14px; border-radius: 10px; background: rgba(6, 3, 24, 0.8); }
+.feature .player-play { align-content: start; padding-top: clamp(40px, 15%, 130px); }
+.feature .player-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* ชื่อปุ่มสำหรับโปรแกรมอ่านหน้าจอ */
+.feat-len { margin-left: 10px; color: var(--gold); }
 .player-len { margin-left: 6px; font: 400 1.235rem var(--pixel); color: var(--gold); }
-.player.playing .player-play { opacity: 0; pointer-events: none; }
-.player-bar { display: flex; justify-content: space-between; gap: 12px; margin: 0; padding: 10px 6px 12px; font: 400 1.105rem/1.3 var(--pixel); letter-spacing: 0.06em; color: var(--muted); }
-.player-bar span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.rec { flex: none; white-space: nowrap; color: #ff5a6e; animation: blink 1.6s steps(2, jump-none) infinite; }
-/* แฮมสเตอร์โผล่จากขอบจอ */
-.player-wrap { position: relative; padding-top: clamp(44px, 6vw, 70px); max-width: calc((100svh - var(--header-h) - 150px) * 1.7); }
-.player-wrap .player { z-index: 1; }
+.player.playing .player-play, .player.playing .feat-cap { opacity: 0; pointer-events: none; }
+.feat-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; padding: clamp(40px, 7%, 80px) clamp(16px, 3.5%, 32px) clamp(14px, 3%, 26px); pointer-events: none; background: linear-gradient(0deg, rgba(5, 1, 14, 0.97) 0%, rgba(5, 1, 14, 0.9) 55%, rgba(5, 1, 14, 0.55) 80%, transparent); transition: opacity 0.3s; }
+.feat-kick { margin: 0; font: 400 clamp(0.9rem, 1.4vw, 1.1rem)/1.3 var(--pixel); letter-spacing: 0.1em; color: #ffb3c4; }
+.feat-cap .show-title { margin: 4px 0 2px; font-size: clamp(1.7rem, 4vw, 3rem); }
+.feat-cap .show-tagline { margin: 0; }
+.feat-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 16px; padding: 14px 18px; border-radius: 16px; background: rgba(8, 4, 30, 0.88); box-shadow: inset 0 0 0 1.5px var(--line); }
+.feat-about { flex: 1 1 340px; margin: 0; font-size: 1rem; line-height: 1.65; color: #ece8ff; }
+.feat-about strong { color: #fff; }
+.feat-link { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 .ham-peek { position: absolute; right: clamp(20px, 7%, 64px); top: 0; z-index: 0; width: clamp(70px, 9vw, 110px); animation: peek 7s var(--ease) infinite; }
-.show-info { padding: 0; }
-.show-kick { margin: 0; font: 400 1.1rem/1.3 var(--pixel); letter-spacing: 0.1em; color: var(--pink); }
-.show-about { color: #e6e0ff; margin-bottom: 14px; }
-.thumbs { list-style: none; margin: 0 0 16px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.thumbs figure { margin: 0; }
-.thumbs img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.14); transition: transform 0.3s var(--ease); }
-@media (hover: hover) { .thumbs li:hover img { transform: scale(1.04); } }
-.thumbs figcaption { margin-top: 6px; font-size: 0.8125rem; line-height: 1.4; color: var(--muted); }
-.thumbs strong { color: #fff; font-weight: 600; }
-.show-note { font-size: 0.8125rem; margin-left: 8px; }
-.show-title { margin: 12px 0 2px; font: italic 800 clamp(1.9rem, 3.4vw, 2.5rem)/1.1 var(--display); letter-spacing: 0.01em; color: #fff; text-shadow: 3px 3px 0 #d6123a, 0 0 26px rgba(255, 60, 90, 0.5); }
-.show-tagline { margin-bottom: 14px; font: 400 1.105rem/1.4 var(--pixel); letter-spacing: 0.08em; text-transform: uppercase; color: #ff8fa0; }
-.show-info > p:not(.tag):not(.show-tagline):not(.show-credit):not(.show-note) { color: var(--muted); }
+.show-note { font-size: 0.8125rem; color: var(--muted); }
+.show-title { font: italic 800 clamp(1.9rem, 3.4vw, 2.5rem)/1.1 var(--display); letter-spacing: 0.01em; color: #fff; text-shadow: 3px 3px 0 #d6123a, 0 0 26px rgba(255, 60, 90, 0.5); }
+.show-tagline { font: 400 1.105rem/1.4 var(--pixel); letter-spacing: 0.08em; text-transform: uppercase; color: #ff9fb0; }
+.feat-credit { display: none; }
+@media (max-width: 600px) {
+  .feat-cap .show-tagline, .feat-cap .feat-kick { display: none; }
+  .feat-cap { padding-top: 26px; }
+  .feature .player-play { padding-top: 12%; }
+  .feat-credit { display: block; flex-basis: 100%; margin: 0; font: 400 0.95rem/1.4 var(--pixel); letter-spacing: 0.06em; color: #ffb3c4; }
+}
 .chips { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { padding: 3px 12px; border-radius: 999px; font: 600 0.85rem/1.6 var(--display); color: #fff; background: rgba(6, 3, 24, 0.5); box-shadow: inset 0 0 0 1.5px rgba(255, 143, 184, 0.45); }
 .show-credit { padding: 12px 14px; border-radius: 14px; background: rgba(6, 3, 24, 0.45); font-weight: 600; font-size: 0.975rem; }

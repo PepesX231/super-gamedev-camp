@@ -208,7 +208,7 @@ export async function initBg3d() {
   // ── รางและขบวนรถไฟ (ตำแหน่งบนรางคำนวณล่วงหน้าเป็นตาราง ไม่ต้องคำนวณเส้นโค้งทุกเฟรม) ──
   const base = meta.path.map(([x, y, z]) => new T.Vector3(x, y, z));
   const railMat = (color, opacity) => new T.MeshBasicMaterial({ color, transparent: true, opacity, blending: T.AdditiveBlending, depthWrite: false });
-  const railMatA = railMat(0x8ff0ff, 0.55), railMatB = railMat(0x9a7bff, 0.12);
+  const railMatA = railMat(0x8ff0ff, 0.38), railMatB = railMat(0x9a7bff, 0.07);
   const LUT_N = 2400;
   let rails = [], lut, lutLen = 1;
   const makeRail = () => {

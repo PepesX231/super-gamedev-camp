@@ -166,6 +166,13 @@ function showcase() {
   const s = c.showcase;
   if (!s) return '';
   const v = s.video;
+  // คลิปเดียวเด่น ๆ เต็มความกว้าง: ชื่อเกมซ้อนบนภาพตัวอย่าง (พื้นมืดไล่เฉด อ่านง่าย) หายไปเมื่อกดเล่น
+  const cap = `
+          <div class="feat-cap" aria-hidden="true">
+            <p class="feat-kick">GAME PROJECT${s.credits?.length ? ` · โดย ${s.credits.map(e).join(' & ')}` : ''}</p>
+            <p class="show-title">${e(s.title)}</p>
+            <p class="show-tagline">${e(s.tagline || '')}<span class="feat-len">▶ TRAILER${v?.length ? ` ${e(v.length)}` : ''}</span></p>
+          </div>`;
   const player = v ? `
       <div class="player monitor">
         <div class="player-screen">
@@ -173,25 +180,21 @@ function showcase() {
           <button class="player-play" type="button" aria-controls="trailer">
             <span class="player-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
             <span class="player-label">ดูเทรลเลอร์${v.length ? ` <span class="player-len">${e(v.length)}</span>` : ''}</span>
-          </button>
+          </button>${cap}
         </div>
-        <p class="player-bar" aria-hidden="true"><span class="rec">● REPLAY</span><span>${e(s.title)} — OFFICIAL TRAILER</span></p>
       </div>` : '';
   return `
 <section id="showcase" class="section showcase">
   ${space('hole', 'cz-show')}
   <div class="wrap">
-    <div class="show-grid">
-      <div class="player-wrap reveal">${v ? hamster('astro-wave', 'ham-peek') : ''}${player}</div>
-      <article class="show-info reveal" style="--c:var(--pink);--d:.12s">
-        ${sectionHead('REPLAY', 'ผลงานจริงจากค่าย', 'ผลงานเพื่อน ๆ ในค่าย Hamster Hub')}
-        <p class="show-kick">GAME PROJECT${s.credits?.length ? ` · โดย ${s.credits.map(e).join(' & ')}` : ''}</p>
-        <h3 class="show-title">${e(s.title)}</h3>
-        ${s.tagline ? `<p class="show-tagline">${e(s.tagline)}</p>` : ''}
-        <p class="show-about">${e(s.about)}</p>
-        ${s.shots?.length ? `<ul class="thumbs">${s.shots.map(x => `<li><figure><img src="${e(x.src)}" alt="ภาพจากเกม ${e(s.title)}: ${e(x.title)}" width="1280" height="720" loading="lazy" decoding="async"><figcaption><strong>${e(x.title)}</strong> ${e(x.caption)}</figcaption></figure></li>`).join('')}</ul>` : ''}
-        ${s.link ? `<a class="btn btn-ghost btn-sm" href="${e(s.link.href)}"${extAttr(s.link.href)}><span>${e(s.link.label)} ↗</span></a>${s.link.note ? ` <span class="muted show-note">${e(s.link.note)}</span>` : ''}` : ''}
-      </article>
+    ${sectionHead('REPLAY', 'ผลงานจริงจากค่าย', 'ผลงานเพื่อน ๆ ในค่าย Hamster Hub')}
+    <div class="feature reveal">
+      ${v ? hamster('astro-wave', 'ham-peek') : ''}${player}
+      <div class="feat-foot">
+        ${s.credits?.length ? `<p class="feat-credit">GAME PROJECT · โดย ${s.credits.map(e).join(' & ')}</p>` : ''}
+        <p class="feat-about"><strong>${e(s.title)}</strong> — ${e(s.about)}</p>
+        ${s.link ? `<div class="feat-link"><a class="btn btn-primary btn-sm" href="${e(s.link.href)}"${extAttr(s.link.href)}><span>${e(s.link.label)} ↗</span></a>${s.link.note ? `<span class="show-note">${e(s.link.note)}</span>` : ''}</div>` : ''}
+      </div>
     </div>
   </div>
 </section>`;
