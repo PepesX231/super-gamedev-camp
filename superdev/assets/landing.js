@@ -1,7 +1,7 @@
 import { c, e, preview, pend, val, dateText, priceText, slotsText, registrationState, registerLink, logoImg, mount } from './core.js';
 import { systemArt } from './art.js';
 import { sceneArt } from './scene.js';
-import { gear, ufo, space, skyfall, paintStarfield } from './cosmos.js';
+import { gear, ufo, space, skyfall, paintStarfield, depthLayers, initDepth } from './cosmos.js';
 
 const paths = { root: '', home: '', register: 'register/index.html', privacy: 'privacy/index.html' };
 const reg = registrationState();
@@ -331,7 +331,6 @@ const FAQ_SHOW = 6;
 function faq() {
   const p = c.preparation, x = c.extras;
   const join = (...parts) => (parts.every(Boolean) ? parts.join(' ') : null);
-  const links = c.contact.links;
   const items = [
     ['ต้องมีพื้นฐานมาก่อนไหม', c.audience.prerequisites],
     ['อายุหรือระดับชั้นเท่าไรจึงสมัครได้', c.audience.who],
@@ -369,11 +368,6 @@ function faq() {
       </details>`).join('')}
       ${items.length > FAQ_SHOW ? `<button class="faq-more" type="button" aria-expanded="false">ดูคำถามอีก ${items.length - FAQ_SHOW} ข้อ <span aria-hidden="true">↓</span></button>` : ''}
     </div>
-      ${links.length ? `
-      <div class="faq-contact reveal">
-        <p>ยังไม่เจอคำตอบ? ถามผู้จัดได้เลย</p>
-        <ul>${links.map(l => `<li><a href="${e(l.href)}"${extAttr(l.href)}>${e(l.label)}</a></li>`).join('')}</ul>
-      </div>` : ''}
   </div>
 </section>`;
 }
@@ -427,9 +421,10 @@ function joinSection() {
 </section>`;
 }
 
-mount(paths, [hero(), skyfall(), about(), build(), showcase(), outcomes(), missions(), people(), prepare(), faq(), joinSection()].join(''));
+mount(paths, [hero(), depthLayers(), skyfall(), about(), build(), showcase(), outcomes(), missions(), people(), prepare(), faq(), joinSection()].join(''));
 
 paintStarfield();
+initDepth({ reduced: matchMedia('(prefers-reduced-motion: reduce)').matches });
 
 // FAQ: แสดง 6 ข้อแรก ที่เหลือกดดูเพิ่ม
 document.querySelector('.faq-more')?.addEventListener('click', ev => {

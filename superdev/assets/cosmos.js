@@ -227,3 +227,54 @@ export function paintStarfield() {
     clearTimeout(t); t = setTimeout(draw, 250);
   }, { passive: true });
 }
+
+
+// ── จักรวาลแบบหลายชั้น (2.5D): ดาวเคราะห์อุปกรณ์เกม 3 ระดับความลึก เลื่อนด้วยความเร็วต่างกัน (parallax)
+// + จอพอร์ทัลที่มีรถไฟอวกาศพุ่งออกมาแล้ววิ่งวนไปทั่วฉากหลัง — ภาพทั้งหมดเจนด้วย Canva AI
+const SPR = {"pl-console": [390, 420], "pl-monitor": [420, 315], "pl-mouse": [420, 325], "pl-pad": [397, 377], "pl-laptop": [420, 381], "pl-tablet": [420, 366], "portal": [520, 471], "train": [720, 288]};
+const planet = (k, x, y, w, extra = '') =>
+  `<img class="dl-item${extra}" src="assets/img/${k}.webp" alt="" width="${SPR[k][0]}" height="${SPR[k][1]}" decoding="async" loading="lazy" style="left:${x}%;top:${y}%;width:${w}px;--r:${(x * 7 + y * 3) % 30 - 15}deg;--t:${8 + ((x + y) % 7)}s">`;
+const LAYERS = {
+  far: { f: 0.08, items: [['pl-mouse', 6, 9, 74], ['pl-tablet', 78, 4, 70], ['pl-console', 90, 34, 64], ['pl-laptop', 18, 46, 70], ['pl-pad', 62, 58, 66], ['pl-monitor', 8, 78, 72], ['pl-mouse', 84, 86, 62]] },
+  mid: { f: 0.22, items: [['pl-monitor', 88, 6, 150], ['pl-pad', 2, 20, 140], ['pl-laptop', 86, 36, 150], ['pl-console', 4, 52, 120], ['pl-tablet', 90, 66, 140], ['pl-mouse', 6, 84, 130]] },
+  near: { f: 0.42, items: [['pl-pad', 94, 22, 300], ['pl-console', -6, 50, 260], ['pl-monitor', 96, 80, 320]] },
+};
+export function depthLayers() {
+  const layer = (name) => `<div class="dl dl-${name}" data-f="${LAYERS[name].f}">${LAYERS[name].items.map(([k, x, y, w], i) => planet(k, x, y, w, i % 3 === 2 ? ' dl-wide' : '')).join('')}</div>`;
+  return `<div class="depth" aria-hidden="true">${layer('far')}${layer('mid')}${layer('near')}
+  <div class="rail">
+    <img class="portal" src="assets/img/portal.webp" alt="" width="${SPR.portal[0]}" height="${SPR.portal[1]}" decoding="async">
+    <img class="train" src="assets/img/train.webp" alt="" width="${SPR.train[0]}" height="${SPR.train[1]}" decoding="async">
+  </div></div>`;
+}
+
+// ชั้นลึกต่างกันเลื่อนด้วยความเร็วต่างกัน และเส้นทางรถไฟคำนวณตามขนาดจอ (offset-path)
+export function initDepth({ reduced = false } = {}) {
+  const root = document.querySelector('.depth');
+  if (!root) return;
+  const layers = [...root.querySelectorAll('.dl')];
+  const train = root.querySelector('.train'), portal = root.querySelector('.portal');
+  const size = () => {
+    const vh = innerHeight, doc = document.documentElement.scrollHeight;
+    for (const l of layers) l.style.height = `${Math.round(vh + (doc - vh) * Number(l.dataset.f))}px`;
+    // รถไฟออกจากจอพอร์ทัล (ซ้ายบน) โค้งลงกลางจอ แล้วเลี้ยวขึ้นออกขวา จากนั้นวนกลับเข้าพอร์ทัลจากนอกจอ
+    const w = innerWidth, pr = portal.getBoundingClientRect();
+    const sx = pr.left + pr.width * 0.42, sy = pr.top + pr.height * 0.62;
+    const d = `M ${sx} ${sy} C ${w * 0.32} ${vh * 0.62}, ${w * 0.55} ${vh * 0.9}, ${w * 0.78} ${vh * 0.58} S ${w * 1.05} ${vh * 0.1}, ${w + 400} ${vh * 0.2}`;
+    train.style.offsetPath = `path('${d}')`;
+  };
+  size();
+  let t;
+  addEventListener('resize', () => { clearTimeout(t); t = setTimeout(size, 200); }, { passive: true });
+  addEventListener('load', size, { once: true });
+  setTimeout(size, 1500);
+  if (reduced) return;
+  let queued = false;
+  const move = () => {
+    queued = false;
+    const y = scrollY;
+    for (const l of layers) l.style.transform = `translate3d(0, ${(-y * Number(l.dataset.f)).toFixed(1)}px, 0)`;
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(move); } }, { passive: true });
+  move();
+}
