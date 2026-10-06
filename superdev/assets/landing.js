@@ -191,7 +191,8 @@ function showcase() {
   <div class="wrap">
     ${sectionHead('REPLAY', 'ผลงานจริงจากค่าย', 'ผลงานเพื่อน ๆ ในค่าย Hamster Hub')}
     <div class="feature reveal">
-      ${v ? hamster('astro-wave', 'ham-peek') : ''}${player}
+      <div class="feat-main">${player}</div>
+      ${s.shots?.length ? `<ul class="feat-shots">${s.shots.map(x => `<li><figure><img src="${e(x.src)}" alt="ภาพจากเกม ${e(s.title)}: ${e(x.title)}" width="1280" height="720" loading="lazy" decoding="async"><figcaption><strong>${e(x.title)}</strong> ${e(x.caption)}</figcaption></figure></li>`).join('')}</ul>` : ''}
       <div class="feat-foot">
         ${s.credits?.length ? `<p class="feat-credit">GAME PROJECT · โดย ${s.credits.map(e).join(' & ')}</p>` : ''}
         <p class="feat-about"><strong>${e(s.title)}</strong> — ${e(s.about)}</p>
