@@ -418,3 +418,10 @@ with open(os.path.join(OUT_DIR, 'bg.json'), 'w') as f:
     json.dump({'col': COL_LEN, 'materials': WEB, 'groups': groups, 'path': path3, 'cam': {'z': 16, 'halfW': 12}}, f, separators=(',', ':'))
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, 'bg-scene.blend'), compress=True)
 print('groups', len(groups), 'verts', sum(meshes), 'bytes', len(blob))
+
+# สำเนาข้อมูลเป็นสคริปต์ สำหรับเปิดแบบ file:// (เบราว์เซอร์ไม่ยอมให้ fetch ไฟล์ในเครื่อง)
+import base64
+with open(os.path.join(OUT_DIR, 'bg-data.js'), 'w') as f:
+    meta = open(os.path.join(OUT_DIR, 'bg.json')).read()
+    gzb = base64.b64encode(open(os.path.join(OUT_DIR, 'bg.bin.gz'), 'rb').read()).decode()
+    f.write('window.__BG3D={meta:' + meta + ',gz:"' + gzb + '"};\n')

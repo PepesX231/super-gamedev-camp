@@ -28,7 +28,16 @@ export async function initBg3d() {
   if (saveData || !webglOK()) return;
   let T, meta, bin;
   try {
-    [T, meta, bin] = await Promise.all([loadThree(), fetch('assets/3d/bg.json').then((r) => r.json()), loadBin()]);
+    if (location.protocol === 'file:') {
+      // เปิดจากไฟล์ในเครื่อง: fetch ใช้ไม่ได้ จึงโหลดข้อมูลที่ฝังไว้ในสคริปต์แทน
+      await new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = 'assets/3d/bg-data.js'; sc.onload = ok; sc.onerror = no; document.head.append(sc); });
+      const d = window.__BG3D; meta = d.meta;
+      const raw = Uint8Array.from(atob(d.gz), (ch) => ch.charCodeAt(0));
+      bin = await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+      T = await loadThree();
+    } else {
+      [T, meta, bin] = await Promise.all([loadThree(), fetch('assets/3d/bg.json').then((r) => r.json()), loadBin()]);
+    }
   } catch {
     return;
   }
