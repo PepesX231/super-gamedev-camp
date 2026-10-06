@@ -905,6 +905,10 @@ input[aria-invalid] { border-color: var(--danger); }
 .sum-title { display: none; }
 .infobar .info { text-shadow: 0 1px 10px rgba(6, 3, 24, 0.8); }
 
+/* หน้าแรกกลืนเข้ากับฉากอวกาศด้านล่าง: ฉากค่อย ๆ จางหาย ไม่มีขอบตัด */
+.hero::after { display: none; }
+.hero .scene { -webkit-mask: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.55) 80%, transparent 100%); mask: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.55) 80%, transparent 100%); }
+
 /* ── 10 ลดการเคลื่อนไหว ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
