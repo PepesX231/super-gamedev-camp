@@ -204,7 +204,7 @@ function showcase() {
 }
 
 function outcomes() {
-  const emojis = ['emoji-map', 'emoji-cube', 'emoji-spark', 'emoji-bolt', 'emoji-film', 'emoji-laptop', 'emoji-mega'];
+  const emojis = ['emoji2-map', 'emoji2-unity', 'emoji2-ai', 'emoji2-skill', 'emoji2-cut', 'emoji2-ui', 'emoji2-talk'];
   const colors = ['var(--cyan)', 'var(--gold)', 'var(--pink)', 'var(--violet-hi)'];
   return `
 <section id="outcomes" class="section">

@@ -909,6 +909,12 @@ input[aria-invalid] { border-color: var(--danger); }
 .hero::after { display: none; }
 .hero .scene { -webkit-mask: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.55) 80%, transparent 100%); mask: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.55) 80%, transparent 100%); }
 
+.footer-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.footer-dev a { color: var(--cyan); }
+.skill-node { width: 124px; height: 124px; margin-bottom: 8px; }
+.skill-node .skill-emoji { width: 100%; height: 100%; object-fit: contain; }
+@media (max-width: 600px) { .skill-node { width: 84px; height: 84px; } }
+
 /* ── 10 ลดการเคลื่อนไหว ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

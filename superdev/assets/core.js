@@ -134,7 +134,7 @@ function footer(p) {
     </div>
     ${privacy ? `<div><h2 class="footer-h">ข้อมูลเพิ่มเติม</h2><ul class="plain">${privacy}</ul></div>` : ''}
   </div>
-  <div class="wrap footer-base muted">© ${e(c.camp.organizer)} · ${e(c.camp.name)}</div>
+  <div class="wrap footer-base muted"><span>© ${e(c.camp.organizer)} · ${e(c.camp.name)}</span><span class="footer-dev">พัฒนาเว็บโดย <a href="https://github.com/PepesX231" target="_blank" rel="noopener">ชมน์ปภพ ดีจริง</a></span></div>
 </footer>`;
 }
 
